@@ -51,7 +51,12 @@ describe('Actions::Pages', () => {
 
   it('deletes the page successfully', () => {
     nock(API)
-      .delete(`/pages/page-dir/test/test.md`)
+      .intercept('/pages/page-dir/test/test.md', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
+      .delete('/pages/page-dir/test/test.md')
       .reply(200);
 
     const expectedActions = [
@@ -70,7 +75,12 @@ describe('Actions::Pages', () => {
 
   it('creates DELETE_PAGE_FAILURE when deleting a page failed', () => {
     nock(API)
-      .delete(`/pages/page.md`)
+      .intercept('/pages/page.md', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
+      .delete('/pages/page.md')
       .replyWithError('something awful happened');
 
     const expectedAction = {
