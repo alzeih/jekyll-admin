@@ -44,6 +44,8 @@ export default class MetaButtons extends Component {
           </span>
         );
       }
+
+      return null;
     }).filter(Boolean);
   }
 
